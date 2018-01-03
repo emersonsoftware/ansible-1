@@ -229,6 +229,12 @@ options:
     required: false
     default: null
     version_added: "1.9"
+  storage_encrypted:
+    description:
+      - Configure the db instance for encryption at rest. Only used when command=create. Requires boto >= 2.26.0
+    required: false
+    default: False
+    version_added: "2.4 Emerson Fork"
   tags:
     description:
       - tags dict to apply to a resource. Used with command=create, command=replicate, command=restore. Requires boto >= 2.26.0
@@ -961,7 +967,7 @@ def create_db_instance(module, conn):
                   'character_set_name', 'db_name', 'engine_version',
                   'instance_type', 'iops', 'license_model', 'maint_window',
                   'multi_zone', 'option_group', 'parameter_group', 'port',
-                  'subnet', 'upgrade', 'zone']
+                  'subnet', 'upgrade', 'zone', 'storage_encrypted']
     if module.params.get('subnet'):
         valid_vars.append('vpc_security_groups')
     else:
@@ -1349,7 +1355,8 @@ def main():
         tags=dict(type='dict', required=False),
         publicly_accessible=dict(required=False),
         character_set_name=dict(required=False),
-        force_failover=dict(type='bool', required=False, default=False)
+        force_failover=dict(type='bool', required=False, default=False),
+        storage_encrypted=dict(type='bool', required=False, default=False)
     )
     )
 
