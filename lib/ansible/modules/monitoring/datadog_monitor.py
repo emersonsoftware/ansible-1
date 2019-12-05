@@ -197,7 +197,7 @@ def main():
     if isinstance(response, dict):
         msg = response.get('errors', None)
         if msg:
-            module.fail_json(msg="Failed to connect Datadog server using given app_key and api_key : {0}".format(msg[0]))
+            module.fail_json(msg="Failed to connect Datadog server using given app_key and api_key : {0}".format(msg))
 
     if module.params['state'] == 'present':
         install_monitor(module)
